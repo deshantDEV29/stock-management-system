@@ -1,8 +1,40 @@
 import React from 'react'
+import './Navigator.css';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {Link} from "react-router-dom";
 
 function Navigator() {
   return (
-    <div>Navigator</div>
+    <div classname='navigator'>
+      <Link to='/dashboard' style={{ textDecoration: 'none' }}>
+        <div className='navigator__row'>
+          <DashboardIcon/>
+          <p>Dashboard</p>
+        </div>
+      </Link>
+      <Link to='/stock' style={{ textDecoration: 'none' }}>
+        <div className='navigator__row'>
+          <Inventory2Icon/>
+          <p>Stock</p>
+        </div>
+      </Link>
+      <Link to='/report' style={{ textDecoration: 'none' }}>
+        <div className='navigator__row'>
+          <AssignmentIcon/>
+          <p>Report</p>
+        </div>
+      </Link>
+      <Link to='/logout' style={{ textDecoration: 'none' }}>
+        <div className='navigator__row'>
+          <LogoutIcon/>
+          <p>Logout</p>
+        </div>
+      </Link>
+      
+    </div>
   )
 }
 

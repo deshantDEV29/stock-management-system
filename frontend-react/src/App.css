@@ -1,3 +1,15 @@
 .app__container{
     display: flex;
 }
+
+.app__left{
+    width: 200px;
+    background-color: rgb(94, 92, 92);
+    height: 100%;
+}
+
+.app__right{
+    
+    color: blue;
+}
+

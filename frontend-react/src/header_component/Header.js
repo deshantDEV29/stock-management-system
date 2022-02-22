@@ -1,10 +1,10 @@
 import React from 'react'
-import './Header.css'
+import './Header.css';
 
 function Header() {
   return (
-    <div>
-      <h1>Stock Management System</h1>
+    <div className='header'>
+      <h1 className='heading'>Stock Management System</h1>
     </div>
   )
 }
