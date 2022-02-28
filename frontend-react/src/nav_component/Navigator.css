@@ -10,6 +10,7 @@
     padding-left: 30px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .navigator__row p{

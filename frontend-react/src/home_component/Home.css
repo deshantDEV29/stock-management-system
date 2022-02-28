@@ -1,0 +1,22 @@
+.summary{
+    display: flex;
+    float: left;
+    position: relative;
+}
+
+.summary__container{
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+.summary__container span{
+    padding-right: 15px;
+}
+
+.icon{
+    width: 60px !important ;
+  height: 100% !important;
+}

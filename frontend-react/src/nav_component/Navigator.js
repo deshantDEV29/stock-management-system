@@ -4,6 +4,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {Link} from "react-router-dom";
 
 function Navigator() {
@@ -21,6 +23,14 @@ function Navigator() {
           <p>Stock</p>
         </div>
       </Link>
+      <div className='navigator__row'>
+          <ShoppingCartCheckoutIcon/>
+          <p>Stock Outflow</p>
+      </div>
+      <div className='navigator__row'>
+          <ShowChartIcon/>
+          <p>Stock Inflow</p>
+      </div>  
       <Link to='/report' style={{ textDecoration: 'none' }}>
         <div className='navigator__row'>
           <AssignmentIcon/>

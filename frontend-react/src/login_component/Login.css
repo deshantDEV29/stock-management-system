@@ -5,9 +5,10 @@
     display: grid;
     padding: 20px;
     margin-top: 100px;
+    
 }
 
-input{
+.userinput{
     width: 250px;
     height: 30px;
     margin-bottom: 10px;
@@ -15,23 +16,24 @@ input{
     padding: 5px;
     border-radius: 5px;
     border-color: grey;
-    border: 1px solid;
+    border: none;
+    
 }
-input[type="text"]
+.userinput[type="text"]
 {
     font-size:24px;
 }
 
-input[type=text]:focus {
+.userinput[type=text]:focus {
   border: 3.5px solid #555;
 }
 
-input[type="password"]
+.userinput[type="password"]
 {
     font-size:24px;
 }
 
-input[type=password]:focus {
+.userinput[type=password]:focus {
   border: 3.5px solid #555;
 }
 
