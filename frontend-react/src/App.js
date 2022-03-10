@@ -5,8 +5,9 @@ import Home from './home_component/Home';
 import Login from './login_component/Login';
 import Header from './header_component/Header'
 import Navigator from './nav_component/Navigator'
-import Report from './report_component/Report'
 import Stock from './stock_component/Stock'
+import StockInflow from './stock_component/StockInflow'
+import StockOutflow from './stock_component/StockOutflow'
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
             <Route path="/" element={<Login/>}></Route>
             <Route path="/logout" element={<Login/>}></Route>
             <Route path="/stock" element={<StockPage/>}></Route>
-            <Route path="/report" element={<ReportPage/>}></Route>
+            <Route path="/stockinflow" element={<StockInflowPage/>}></Route>
+             <Route path="/stockoutflow" element={<StockOutflowPage/>}></Route> 
+                   
           </Routes>
       </div>
     </BrowserRouter>
@@ -38,6 +41,32 @@ function Dashboard(){
   );
 }
 
+function StockOutflowPage(){
+   return(
+    <div className='app__container'>
+        <div className='app__left'>
+            <Navigator/>
+        </div>
+          <div className='app__right'>
+             <StockOutflow/>
+          </div> 
+    </div>
+  );
+}
+
+function StockInflowPage(){
+  return(
+    <div className='app__container'>
+        <div className='app__left'>
+            <Navigator/>
+        </div>
+          <div className='app__right'>
+             <StockInflow/>
+          </div> 
+    </div>
+  );
+}
+
 function StockPage(){
   return(
     <div className='app__container'>
@@ -51,17 +80,5 @@ function StockPage(){
   );
 }
 
-function ReportPage(){
-  return(
-    <div className='app__container'>
-        <div className='app__left'>
-            <Navigator/>
-        </div>
-          <div className='app__right'>
-             <Report/>
-          </div> 
-    </div>
-  );
-}
 
 export default App;

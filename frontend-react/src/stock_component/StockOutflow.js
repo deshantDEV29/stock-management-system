@@ -1,20 +1,24 @@
 import React,{useState,useEffect}  from 'react'
 import {useNavigate} from 'react-router-dom'
-import './Stock.css'
+import './StockOutflow.css'
 
-function Stock() {
+function StockOutflow() {
 
+  const [sale_id,setSale_id]=useState("")
   const [product_name,setProduct_name]=useState("")
-  const [supplier_name,setSupplier_name]=useState("")
-  const [unit_price,setUnit_price]=useState()
-  const [quantity,setQuantity]=useState()
+  const [quantity,setQuantity]=useState("")
   const [data,setData]=useState([])
+  const [product_data,setProduct_data]=useState([])
   let navigate = useNavigate();
 
   useEffect(async()=>{
-    let result = await fetch("http://localhost:8000/api/displayproduct");
+    let result = await fetch("http://localhost:8000/api/displayproductdispatched");
      result = await result.json();
     setData(result)
+
+    let productname = await fetch("http://localhost:8000/api/displayproductname");
+     productname = await productname.json();
+    setProduct_data(productname)
   },[])
 
   const DisplayData=data.map(
@@ -22,9 +26,8 @@ function Stock() {
             return(
                 <tr className='table__updaterow'>
                     <td>{stock.id}</td>
+                    <td>{stock.sale_id}</td>
                     <td>{stock.product_name}</td>
-                    <td>{stock.supplier_name}</td>
-                    <td>{stock.unit_price}</td>
                     <td>{stock.quantity}</td>
                     <td>{stock.updated_at}</td>
                 </tr>
@@ -32,14 +35,21 @@ function Stock() {
         }
     )
 
-  console.log("result", data)
+  const DisplayProductData=product_data.map(
+        (product)=>{
+            return(
+                <option className='select__option'>{product.product_name}</option>
+            )
+        }
+    )
 
-  async function addstock (e) {
+  async function dispatchstock (e) {
+    console.log(product_name)
     e.preventDefault();
-    let inventory = {product_name,supplier_name,unit_price,quantity}
+    let inventory = {sale_id,product_name,quantity}
     console.log(inventory);
 
-    let result = await fetch("http://localhost:8000/api/addproduct",{
+    let result = await fetch("http://localhost:8000/api/productdispatched",{
       method:'POST',
       body:JSON.stringify(inventory),
       headers:{
@@ -51,7 +61,7 @@ function Stock() {
     if(result){   
       console.log(result)
       localStorage.setItem("user-info",JSON.stringify(result))
-      navigate("/stock");
+      navigate("/stockoutflow");
       window.location.reload(false);
       
     }
@@ -62,34 +72,32 @@ function Stock() {
     e.target.reset();
   }
 
-  return (
-    <div >
-      <div className='add__stock'>
-        <h1>Add Product</h1>
+  return(
+    <div>
+      <div className='remove__stock'>
+        <h1>Dispatch Stock</h1>
         <form>
           <table >
             <tr >
-              <th>Product Name</th>
-              <th>Supplier</th>
-              <th>Unit Price </th>
+              <th>Sale ID</th>
+              <th>Product</th>
               <th>Quantity</th>
             </tr>
             <tr>
               <td >
-                <input type="text"  value={product_name} onChange={(e)=>setProduct_name(e.target.value)}  className='table__input'></input>
+                <input type="text" value={sale_id} onChange={(e)=>setSale_id(e.target.value)}  className='table__input'></input>
               </td>
               <td >
-                <input type="text"  value={supplier_name} onChange={(e)=>setSupplier_name(e.target.value)}  className='table__input' ></input>
+                <select type="text" value={product_name} onChange={(e)=>setProduct_name(e.target.value) } className='table__select' >
+                     {DisplayProductData}            
+                </select>
               </td>
               <td >
-                <input type="text"  value={unit_price} onChange={(e)=>setUnit_price(e.target.value)}  className='table__input'></input>
-              </td>
-              <td >
-                <input type="text"  value={quantity} onChange={(e)=>setQuantity(e.target.value)}  className='table__input'></input>
+                <input type="text" value={quantity} onChange={(e)=>setQuantity(e.target.value)}   className='table__input'></input>
               </td>
             </tr>
           </table>
-          <button onClick={addstock} className='btn__addItem'>Add Item</button>
+          <button onClick={dispatchstock} className='btn__removeItem'>Remove Item</button>
         </form>
       </div>
       <div className='recent__update'>
@@ -97,14 +105,13 @@ function Stock() {
         <table className='table__update'>
             <thead className='table__updaterow'>
               <th >ID</th>
-              <th>Product Name</th>
-              <th>Supplier</th>
-              <th>Unit Price</th>
+              <th>Sale ID</th>
+              <th>Product</th>
               <th>Quantity</th>
               <th>Date</th>
             </thead>
             <tbody>
-              {DisplayData}
+             {DisplayData}
             </tbody>
             
           </table>
@@ -113,4 +120,4 @@ function Stock() {
   )
 }
 
-export default Stock
+export default StockOutflow

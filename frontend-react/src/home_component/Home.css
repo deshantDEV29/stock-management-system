@@ -1,7 +1,12 @@
+.home{
+    display: grid;
+}
 .summary{
     display: flex;
     float: left;
     position: relative;
+    background-color: white;
+    padding: 20px;
 }
 
 .summary__container{

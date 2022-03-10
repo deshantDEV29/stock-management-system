@@ -49,6 +49,13 @@ class ProductController extends Controller
         return response($response, 200);
     }
 
+    public function displayproductname(){
+
+        $response = Product::all('product_name') ;
+        
+        return response($response, 200);
+    }
+
     public function productrecieved(Request $request){
 
         $result1=ProductRecieved::create([
@@ -71,6 +78,21 @@ class ProductController extends Controller
         }
 
     }
+
+    public function displayproductrecieved(){
+
+        $response = ProductRecieved::all() ;
+        
+        return response($response, 200);
+    }
+
+    public function displayproductdispatched(){
+
+        $response = ProductDispatched::all() ;
+        
+        return response($response, 200);
+    }
+
 
     public function productdispatched(Request $request){
 

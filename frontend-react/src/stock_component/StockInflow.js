@@ -1,20 +1,24 @@
 import React,{useState,useEffect}  from 'react'
 import {useNavigate} from 'react-router-dom'
-import './Stock.css'
+import './StockInflow.css'
 
-function Stock() {
+function StockInflow() {
 
-  const [product_name,setProduct_name]=useState("")
-  const [supplier_name,setSupplier_name]=useState("")
-  const [unit_price,setUnit_price]=useState()
-  const [quantity,setQuantity]=useState()
+  const [order_id,setOrder_id]=useState("")
+  const [item,setItem]=useState("")
+  const [quantity,setQuantity]=useState("")
   const [data,setData]=useState([])
+  const [product_data,setProduct_data]=useState([])
   let navigate = useNavigate();
 
   useEffect(async()=>{
-    let result = await fetch("http://localhost:8000/api/displayproduct");
+    let result = await fetch("http://localhost:8000/api/displayproductrecieved");
      result = await result.json();
     setData(result)
+
+    let productname = await fetch("http://localhost:8000/api/displayproductname");
+     productname = await productname.json();
+    setProduct_data(productname)
   },[])
 
   const DisplayData=data.map(
@@ -22,12 +26,19 @@ function Stock() {
             return(
                 <tr className='table__updaterow'>
                     <td>{stock.id}</td>
-                    <td>{stock.product_name}</td>
-                    <td>{stock.supplier_name}</td>
-                    <td>{stock.unit_price}</td>
+                    <td>{stock.order_id}</td>
+                    <td>{stock.item}</td>
                     <td>{stock.quantity}</td>
                     <td>{stock.updated_at}</td>
                 </tr>
+            )
+        }
+    )
+
+  const DisplayProductData=product_data.map(
+        (product)=>{
+            return(
+                <option className='select__option'>{product.product_name}</option>
             )
         }
     )
@@ -36,10 +47,10 @@ function Stock() {
 
   async function addstock (e) {
     e.preventDefault();
-    let inventory = {product_name,supplier_name,unit_price,quantity}
+    let inventory = {order_id,item,quantity}
     console.log(inventory);
 
-    let result = await fetch("http://localhost:8000/api/addproduct",{
+    let result = await fetch("http://localhost:8000/api/productrecieved",{
       method:'POST',
       body:JSON.stringify(inventory),
       headers:{
@@ -51,7 +62,7 @@ function Stock() {
     if(result){   
       console.log(result)
       localStorage.setItem("user-info",JSON.stringify(result))
-      navigate("/stock");
+      navigate("/stockinflow");
       window.location.reload(false);
       
     }
@@ -62,27 +73,26 @@ function Stock() {
     e.target.reset();
   }
 
+    
   return (
-    <div >
+    <div><div >
       <div className='add__stock'>
-        <h1>Add Product</h1>
+        <h1>Add Stock</h1>
         <form>
           <table >
             <tr >
-              <th>Product Name</th>
-              <th>Supplier</th>
-              <th>Unit Price </th>
+              <th>Order ID</th>
+              <th>Product</th>
               <th>Quantity</th>
             </tr>
             <tr>
               <td >
-                <input type="text"  value={product_name} onChange={(e)=>setProduct_name(e.target.value)}  className='table__input'></input>
+                <input type="text"  value={order_id} onChange={(e)=>setOrder_id(e.target.value)}  className='table__input'></input>
               </td>
               <td >
-                <input type="text"  value={supplier_name} onChange={(e)=>setSupplier_name(e.target.value)}  className='table__input' ></input>
-              </td>
-              <td >
-                <input type="text"  value={unit_price} onChange={(e)=>setUnit_price(e.target.value)}  className='table__input'></input>
+                <select type="text"  value={item} onChange={(e)=>setItem(e.target.value)}  className='table__select' >
+                       {DisplayProductData}           
+                </select>
               </td>
               <td >
                 <input type="text"  value={quantity} onChange={(e)=>setQuantity(e.target.value)}  className='table__input'></input>
@@ -97,9 +107,8 @@ function Stock() {
         <table className='table__update'>
             <thead className='table__updaterow'>
               <th >ID</th>
-              <th>Product Name</th>
-              <th>Supplier</th>
-              <th>Unit Price</th>
+              <th>Order ID</th>
+              <th>Product</th>
               <th>Quantity</th>
               <th>Date</th>
             </thead>
@@ -109,8 +118,8 @@ function Stock() {
             
           </table>
       </div>
-    </div>
+    </div></div>
   )
 }
 
-export default Stock
+export default StockInflow
